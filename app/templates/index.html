@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block navbarleft %}
+            <ul class="nav navbar-nav">
+                
+                <li><a href="{{ url_for('main.add_word') }}">Add word</a></li>
+           </ul>
+{%endblock %}            
+
+{% block page_content %}
+
+
+
+
+
+
+<div class="vcenter">
+<div style="height:100px"></div>
+<div>    
+<h1  class="logo">Wikomega</h1>
+</div>
+
+<div style="height:10px"></div>
+
+<div>
+        <form  action="{{ url_for('main.search_entity') }}" method=post role="form" class="form-horizontal"> 
+                <input type="text" name=entityname  class="form_control col-lg-12 input-lg" placeholder="search me"> 
+        </form>
+
+</div>
+</div>
+    
+{% endblock %}

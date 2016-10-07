@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+
+<div>
+<h1> Which one do you mean? </h1>
+<ol class="list-group">
+{% for item in  entries  %}
+     <li class="list-group-item"> <a style="color:black" href="{{url_for('main.go_entity', name= item.eid) }}"> {{item.caption}} </a>  </li>
+{% endfor %}
+</ol>      
+</div>
+
+          {% endblock %}

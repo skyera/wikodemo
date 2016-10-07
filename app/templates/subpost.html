@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% import "_macros.html" as macros %}
+
+{% block title %}Wikomega - Post{% endblock %}
+
+{% block page_content %}
+{{ macros.show_post(post, current_user, moment) }}
+
+<div style="height:10px"></div>
+
+
+<div class="post-content">
+   <form  action="{{ url_for('main.add_subpost',id=post.id) }}" method=post role="form" class="form-horizontal"> 
+
+  <div class="col-xs-10">
+    <input type="text" name="comment" class="form-control" placeholder= "Comment" >
+  </div>
+    <button type="submit" class="btn btn-primary">Post</button>
+
+ </form>
+</div>
+
+           
+<ul class="post">
+   {% for post in subposts %}
+    <div class="post-thumbnail">
+        <a href="{{ url_for('.user', username=post.author.username) }}">
+            <img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=30) }}">
+        </a>
+    </div>
+    
+  <div class="post-content">
+    <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+    <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
+    <div class="post-body">            {{ post.body }}    </div>
+  </div>
+    {% endfor %}
+    
+    {% if pagination %}
+    <div class="pagination">
+         {{ macros.pagination_widget(pagination, '.index') }}
+    </div>
+    {% endif %}
+
+    {% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+    {% endblock %}
+
+
+ 
+ {% endblock %}
+
+    

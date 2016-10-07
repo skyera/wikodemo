@@ -1,0 +1,5 @@
+<ul class="posts">
+    {% for post in posts %}
+        {{ macros.show_post(post, current_user, moment) }}
+    {% endfor %}
+</ul>

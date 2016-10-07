@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% from "_macros.html" import show_post with context %}
+
+{% block navbarleft %}
+         <ul class="nav navbar-nav">
+               
+                <li><a href="{{ url_for('main.add_post', stream=eid, caption=caption) }}">Post</a></li>
+            </ul>
+{% endblock %}   
+
+            
+            
+{% block page_content %}
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"> {{ caption }}   </h1>
+        <small> {{ description }}  <a href="https://en.wikipedia.org/wiki/{{eid}}"> Wikipedia </a> </small>
+    </div>
+</div>
+
+            
+
+<ul class="posts">
+    {% for post in posts %} {{ macros.show_post(post, current_user, moment) }}
+
+    {% endfor %}
+</ul>  
+
+            
+{% if pagination %}
+<div class="pagination">
+     {{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
+            
+
