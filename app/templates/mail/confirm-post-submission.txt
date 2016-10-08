@@ -1,0 +1,11 @@
+Dear {{ user.username }},
+
+Thank you for submission to  Wikomega!
+     
+To view your submission please click on the following link:
+
+{{ url_for('.go_subpost', id=post.id, _external=True) }}
+
+Sincerely,
+
+The Wikomega Team

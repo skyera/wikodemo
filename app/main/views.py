@@ -11,6 +11,7 @@ from ..decorators import admin_required
 from config import basedir
 from datetime import datetime
 from utils import id_generator, utcnow, remove_punct, LOG
+from ..email import send_email
 
 
 @main.route('/')
@@ -30,11 +31,19 @@ def add_post(stream):
        post.timestamp = datetime.utcnow()
        post.author_id = current_user.username
        db.session.add(post)
-       flash('The post has been updated.')
+       db.session.commit()
+       send_email(current_user.email, 'Congratulation! You submitted a post',
+                  'mail/confirm-post-submission', user=current_user, post=post)
+
+       flash('The post has been updated. An confirmation emai has been sent to you')
        return redirect(url_for('.go_entity', name=stream))    
     form.body.data = post.body
     return render_template('edit_post.html', form=form, caption=stream)
 
+@main.route('/confirmpost/<int:id>', methods=['GET', 'POST'])           
+def confirm_post(id):
+    return redirect(url_for('main.go_subpost', id=id))
+            
 @main.route('/gosubpost/<int:id>', methods=['GET', 'POST'])
 def go_subpost(id):
     post = Post.query.get_or_404(id)
@@ -83,7 +92,7 @@ def add_word():
                      print "found searchkey", searchkey.word, searchkey.id 
                  entity.suggestion.append(searchkey)
          db.session.add(entity)
-         db.session.commit()
+#         db.session.commit()
          flash('The new word has been created.')
 #         else:
 #             LOG("add_word(): entity found in db")
@@ -148,10 +157,10 @@ def edit_profile_admin(id):
     return render_template('edit_profile.html', form=form, user=user)
 
 
-@main.route('/post/<int:id>')
-def post(id):
-    post = Post.query.get_or_404(id)
-    return render_template('post.html', posts=[post])
+#@main.route('/post/<int:id>')
+#def post(id):
+#    post = Post.query.get_or_404(id)
+#    return render_template('post.html', posts=[post])
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])

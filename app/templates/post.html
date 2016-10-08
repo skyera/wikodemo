@@ -20,10 +20,10 @@
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-title"> {% if post.title %} {{ post.title }} {% endif %} </div>
             <div class="post-body">
+                {% if post.body %} {{ post.body }} {% endif %}
+            
                 {% if post.body_html %}
-                    {{ post.body_html | safe }}
-                {% else %}
-                    {{ post.body }}
+                    <a href={{ post.body_html }}> more .. </a> 
                 {% endif %}
             </div>
             <div class="post-footer">

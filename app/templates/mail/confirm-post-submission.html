@@ -1,0 +1,8 @@
+<p>Dear {{ user.username }},</p>
+<p>Thank you for submission to  <b>Wikomega</b>!</p>
+<p>To view your submission please <a href="{{ url_for('.go_subpost', id=post.id, _external=True) }}">click here</a>.</p>
+<p>Alternatively, you can paste the following link in your browser's address bar:</p>
+<p>{{ url_for('.go_subpost', id=post.id, _external=True) }}</p>
+<p>Sincerely,</p>
+<p>The Wikomega Team</p>
+<p><small>Note: replies to this email address are not monitored.</small></p>
