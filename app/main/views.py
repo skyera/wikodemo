@@ -48,7 +48,9 @@ def confirm_post(id):
 def go_subpost(id):
     post = Post.query.get_or_404(id)
     subposts = SubPost.query.filter_by(post_id=id).all()
-    return render_template('subpost.html', post=post, subposts=subposts)
+    eid = post.stream_id
+    stream = EntityStream.query.filter_by(eid=eid).first()
+    return render_template('subpost.html', post=post, subposts=subposts, eid=eid, caption=stream.caption)
             
 @main.route('/addsubpost/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -180,7 +182,18 @@ def edit(id):
     form.body.data = post.body
     form.title.data = post.title
     return render_template('edit_post.html', form=form)
-            
+
+@main.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_post(id):
+    post = Post.query.get_or_404(id)
+    streamid = post.stream_id
+    if current_user != post.author and \
+            not current_user.can(Permission.ADMINISTER):
+        abort(403)
+    db.session.delete(post)
+    flash('The post has been deleted.')
+    return redirect(url_for('.go_entity', name=streamid))
             
 @main.route('/go_entity/<name>')
 def go_entity(name):
