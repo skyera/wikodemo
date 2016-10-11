@@ -5,6 +5,15 @@
 
 {% block title %}Wikomega - Post{% endblock %}
 
+
+{% block navbarleft %}
+         <ul class="nav navbar-nav">
+               
+                <li><a class="navbar-brand" href="{{ url_for('main.go_entity', name=eid) }}"> {{ caption }}</a></li>
+            </ul>
+{% endblock %}   
+
+
 {% block page_content %}
 {{ macros.show_post(post, current_user, moment) }}
 
