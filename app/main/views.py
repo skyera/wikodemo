@@ -66,6 +66,9 @@ def add_subpost(id):
     subposts = SubPost.query.filter_by(post_id=id).all()
     return redirect(url_for('.go_subpost', id=id)) 
 
+def keynorm(word):
+    return remove_punct(word).lower()
+            
 def prefix_suggestion(word):
     temp = remove_punct(word).lower()
     temp =  re.split(' ',temp)[0:4]
@@ -159,10 +162,6 @@ def edit_profile_admin(id):
     return render_template('edit_profile.html', form=form, user=user)
 
 
-#@main.route('/post/<int:id>')
-#def post(id):
-#    post = Post.query.get_or_404(id)
-#    return render_template('post.html', posts=[post])
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -176,11 +175,13 @@ def edit(id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data
+        post.body_html = form.link.data
         db.session.add(post)
         flash('The post has been updated.')
-        return redirect(url_for('.post', id=post.id))
+        return redirect(url_for('.go_subpost', id=post.id))
     form.body.data = post.body
     form.title.data = post.title
+    if post.body_html: form.link.data = post.body_html
     return render_template('edit_post.html', form=form)
 
 @main.route('/delete/<int:id>', methods=['GET', 'POST'])
@@ -213,7 +214,7 @@ def go_entity(name):
 def search_entity():
     entity = request.form['entityname']
     #from unicode to str
-    skey =  SearchKey.query.filter_by(word=str(entity.strip())).all()                     
+    skey =  SearchKey.query.filter_by(word=str(keynorm(entity))).all()                     
     if len(skey)==0:
         return abort(404)
     else:
