@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os,json,string
+import os,json,string,sys
 from flask import request,current_app
 from collections import defaultdict
 from app import create_app, db
@@ -32,6 +32,12 @@ def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
+@manager.option("--dbname", help='Database name' )
+def export_db(dbname):
+    if dbname=="EntityStream":
+        stream = EntityStream.query.all()
+        for s in stream:
+            sys.stdout.write('%s\t%s\t%s\n' % (s.id,s.eid,s.caption))
 
     
 @manager.option("--file", help='database file name')
