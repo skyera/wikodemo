@@ -1,4 +1,4 @@
-# Test by zhigang
+# Test2 by zhigang
 import sys
 import uuid,re, string
 import datetime
