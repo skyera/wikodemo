@@ -18,7 +18,7 @@ Wikomega
 1. merge branch xxx to master:
    * git checkout master
    * git pull origin master
-   * git merge  rui.proj.branch
+   * git merge xxx
    * git push origin master
 
 ##choose top query
