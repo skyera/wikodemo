@@ -12,7 +12,7 @@ Wikomega
 4. Install all packages
    * pip install -r requirements/dev.txt
 5. start demo
-   * run manager.py runserver
+   * run manage.py runserver
 
 ##Git manual
 1. merge branch xxx to master:
