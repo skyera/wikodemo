@@ -1,18 +1,18 @@
 Wikomega
 ======
 #Steps to install:
-##git clone source code
-###git clone https://github.com/wikomega/wikodemo.git
-##install virtual env
-###Linux: sudo apt-get install python-virtualenv
-###Mac: sudo easy_install virtualenv
-##start virtualenv
-###virtualenv venv
-###source venv/bin/activate
-##Install all packages
-###pip install -r requirements/dev.txt
-##start demo
-###run manager.py runserver
+1. git clone source code
+   * git clone https://github.com/wikomega/wikodemo.git
+2. install virtual env
+   * Linux: sudo apt-get install python-virtualenv
+   * Mac: sudo easy_install virtualenv
+3. start virtualenv
+   * virtualenv venv
+   * source venv/bin/activate
+4. Install all packages
+   * pip install -r requirements/dev.txt
+5. start demo
+   * run manager.py runserver
 
 
 #choose top query
